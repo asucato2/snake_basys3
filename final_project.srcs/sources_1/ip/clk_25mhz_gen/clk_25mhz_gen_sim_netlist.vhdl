@@ -1,10 +1,10 @@
 -- Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
--- Date        : Tue Dec  8 11:01:25 2020
+-- Date        : Sat Dec  5 09:32:24 2020
 -- Host        : LAPTOP-JJHB379V running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode funcsim
---               c:/Users/asuca/OneDrive/Documents/FinalProject/final_project/final_project.srcs/sources_1/ip/clk_25mhz_gen/clk_25mhz_gen_sim_netlist.vhdl
+-- Command     : write_vhdl -force -mode funcsim -rename_top clk_25mhz_gen -prefix
+--               clk_25mhz_gen_ clk_25mhz_gen_sim_netlist.vhdl
 -- Design      : clk_25mhz_gen
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -17,12 +17,8 @@ use UNISIM.VCOMPONENTS.ALL;
 entity clk_25mhz_gen_clk_25mhz_gen_clk_wiz is
   port (
     clk_out : out STD_LOGIC;
-    reset : in STD_LOGIC;
-    locked : out STD_LOGIC;
     clk_in : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of clk_25mhz_gen_clk_25mhz_gen_clk_wiz : entity is "clk_25mhz_gen_clk_wiz";
 end clk_25mhz_gen_clk_25mhz_gen_clk_wiz;
 
 architecture STRUCTURE of clk_25mhz_gen_clk_25mhz_gen_clk_wiz is
@@ -44,6 +40,7 @@ architecture STRUCTURE of clk_25mhz_gen_clk_25mhz_gen_clk_wiz is
   signal NLW_mmcm_adv_inst_CLKOUT5_UNCONNECTED : STD_LOGIC;
   signal NLW_mmcm_adv_inst_CLKOUT6_UNCONNECTED : STD_LOGIC;
   signal NLW_mmcm_adv_inst_DRDY_UNCONNECTED : STD_LOGIC;
+  signal NLW_mmcm_adv_inst_LOCKED_UNCONNECTED : STD_LOGIC;
   signal NLW_mmcm_adv_inst_PSDONE_UNCONNECTED : STD_LOGIC;
   signal NLW_mmcm_adv_inst_DO_UNCONNECTED : STD_LOGIC_VECTOR ( 15 downto 0 );
   attribute BOX_TYPE : string;
@@ -154,13 +151,13 @@ mmcm_adv_inst: unisim.vcomponents.MMCME2_ADV
       DO(15 downto 0) => NLW_mmcm_adv_inst_DO_UNCONNECTED(15 downto 0),
       DRDY => NLW_mmcm_adv_inst_DRDY_UNCONNECTED,
       DWE => '0',
-      LOCKED => locked,
+      LOCKED => NLW_mmcm_adv_inst_LOCKED_UNCONNECTED,
       PSCLK => '0',
       PSDONE => NLW_mmcm_adv_inst_PSDONE_UNCONNECTED,
       PSEN => '0',
       PSINCDEC => '0',
       PWRDWN => '0',
-      RST => reset
+      RST => '0'
     );
 end STRUCTURE;
 library IEEE;
@@ -170,8 +167,6 @@ use UNISIM.VCOMPONENTS.ALL;
 entity clk_25mhz_gen is
   port (
     clk_out : out STD_LOGIC;
-    reset : in STD_LOGIC;
-    locked : out STD_LOGIC;
     clk_in : in STD_LOGIC
   );
   attribute NotValidForBitStream : boolean;
@@ -183,8 +178,6 @@ begin
 inst: entity work.clk_25mhz_gen_clk_25mhz_gen_clk_wiz
      port map (
       clk_in => clk_in,
-      clk_out => clk_out,
-      locked => locked,
-      reset => reset
+      clk_out => clk_out
     );
 end STRUCTURE;

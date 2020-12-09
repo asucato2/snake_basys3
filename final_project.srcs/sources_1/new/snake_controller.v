@@ -8,6 +8,7 @@ module snake_controller(
     input v_sync,
     output reg counter_en,
     output reg counter_sclr,
+    output reg score_counter_sclr,
     output reg snake_update,
     output reg snake_increase_size,
     output reg apple_update,
@@ -43,6 +44,7 @@ module snake_controller(
     next_state = current_state;
     counter_en = 0;
     counter_sclr = 0;
+    score_counter_sclr = 1;
     snake_update = 0;
     snake_increase_size = 0;
     apple_update = 0;
@@ -50,6 +52,7 @@ module snake_controller(
     if (!pause) begin
       case (current_state)
         STATE_INIT: begin
+          score_counter_sclr = 1;
           counter_sclr = 1;
           apple_update = 1;
           next_state = STATE_WAIT;

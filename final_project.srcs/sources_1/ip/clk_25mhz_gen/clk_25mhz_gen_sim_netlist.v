@@ -1,10 +1,10 @@
 // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
-// Date        : Tue Dec  8 11:01:25 2020
+// Date        : Sat Dec  5 09:32:24 2020
 // Host        : LAPTOP-JJHB379V running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode funcsim
-//               c:/Users/asuca/OneDrive/Documents/FinalProject/final_project/final_project.srcs/sources_1/ip/clk_25mhz_gen/clk_25mhz_gen_sim_netlist.v
+// Command     : write_verilog -force -mode funcsim -rename_top clk_25mhz_gen -prefix
+//               clk_25mhz_gen_ clk_25mhz_gen_sim_netlist.v
 // Design      : clk_25mhz_gen
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -15,35 +15,22 @@
 (* NotValidForBitStream *)
 module clk_25mhz_gen
    (clk_out,
-    reset,
-    locked,
     clk_in);
   output clk_out;
-  input reset;
-  output locked;
   input clk_in;
 
   (* IBUF_LOW_PWR *) wire clk_in;
   wire clk_out;
-  wire locked;
-  wire reset;
 
   clk_25mhz_gen_clk_25mhz_gen_clk_wiz inst
        (.clk_in(clk_in),
-        .clk_out(clk_out),
-        .locked(locked),
-        .reset(reset));
+        .clk_out(clk_out));
 endmodule
 
-(* ORIG_REF_NAME = "clk_25mhz_gen_clk_wiz" *) 
 module clk_25mhz_gen_clk_25mhz_gen_clk_wiz
    (clk_out,
-    reset,
-    locked,
     clk_in);
   output clk_out;
-  input reset;
-  output locked;
   input clk_in;
 
   wire clk_in;
@@ -52,8 +39,6 @@ module clk_25mhz_gen_clk_25mhz_gen_clk_wiz
   wire clk_out_clk_25mhz_gen;
   wire clkfbout_buf_clk_25mhz_gen;
   wire clkfbout_clk_25mhz_gen;
-  wire locked;
-  wire reset;
   wire NLW_mmcm_adv_inst_CLKFBOUTB_UNCONNECTED;
   wire NLW_mmcm_adv_inst_CLKFBSTOPPED_UNCONNECTED;
   wire NLW_mmcm_adv_inst_CLKINSTOPPED_UNCONNECTED;
@@ -68,6 +53,7 @@ module clk_25mhz_gen_clk_25mhz_gen_clk_wiz
   wire NLW_mmcm_adv_inst_CLKOUT5_UNCONNECTED;
   wire NLW_mmcm_adv_inst_CLKOUT6_UNCONNECTED;
   wire NLW_mmcm_adv_inst_DRDY_UNCONNECTED;
+  wire NLW_mmcm_adv_inst_LOCKED_UNCONNECTED;
   wire NLW_mmcm_adv_inst_PSDONE_UNCONNECTED;
   wire [15:0]NLW_mmcm_adv_inst_DO_UNCONNECTED;
 
@@ -165,13 +151,13 @@ module clk_25mhz_gen_clk_25mhz_gen_clk_wiz
         .DO(NLW_mmcm_adv_inst_DO_UNCONNECTED[15:0]),
         .DRDY(NLW_mmcm_adv_inst_DRDY_UNCONNECTED),
         .DWE(1'b0),
-        .LOCKED(locked),
+        .LOCKED(NLW_mmcm_adv_inst_LOCKED_UNCONNECTED),
         .PSCLK(1'b0),
         .PSDONE(NLW_mmcm_adv_inst_PSDONE_UNCONNECTED),
         .PSEN(1'b0),
         .PSINCDEC(1'b0),
         .PWRDWN(1'b0),
-        .RST(reset));
+        .RST(1'b0));
 endmodule
 `ifndef GLBL
 `define GLBL

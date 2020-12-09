@@ -102,13 +102,16 @@ module snake(
             current_direction <= DIRECTION_DOWN; 
           end
         end
+        default: begin
+          current_direction <= current_direction;
+        end
       endcase
     end
   end
   
   always @(posedge update or posedge reset) begin
     if (reset) begin
-      size <= 4;
+      size <= 7'd4;
     end else if (increase_size) begin
       size <= size + 1;
     end

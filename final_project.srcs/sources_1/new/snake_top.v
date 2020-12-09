@@ -23,7 +23,9 @@ module snake_top(
   wire apple_update;
   wire collision;
   wire got_apple;
-  wire collision_sclr, got_apple_sclr;
+  
+  wire [3:0] score;
+  wire score_counter_sclr;
   
   wire[5:0] state_out;
   
@@ -105,10 +107,18 @@ module snake_top(
     .v_sync(v_sync),
     .counter_en(counter_en),
     .counter_sclr(counter_sclr),
+    .score_counter_sclr(score_counter_sclr),
     .snake_update(snake_update),
     .snake_increase_size(snake_increase_size),
     .apple_update(apple_update),
     .state_out(state_out)
+  );
+  
+  score_counter score_counter(
+    .clk(clk_25mhz),
+    .sclr(score_counter_sclr),
+    .en(clk_5hz),
+    .score_out(score)
   );
   
   assign collision = snake_head_on & (snake_body_on | border_on);
@@ -129,5 +139,6 @@ module snake_top(
   assign LED[15] = collision;
   assign LED[14] = got_apple;
   assign LED[13] = clk_5hz;
+  assign LED[10:7] = score;
   
 endmodule
