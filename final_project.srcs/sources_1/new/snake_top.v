@@ -21,8 +21,8 @@ module snake_top(
   wire clk_5hz;
   wire snake_update, snake_increase_size;
   wire apple_update;
-  wire collision;
-  wire got_apple;
+  reg collision;
+  reg got_apple;
   
   wire [3:0] score;
   wire score_counter_sclr;
@@ -121,8 +121,10 @@ module snake_top(
     .score_out(score)
   );
   
-  assign collision = snake_head_on & (snake_body_on | border_on);
-  assign got_apple = snake_head_on & apple_on;
+  always @(posedge clk_25mhz) begin
+    collision <= snake_head_on & (snake_body_on | border_on);
+    got_apple <= snake_head_on & apple_on;
+  end
     
   assign red_data = apple_on;
   assign green_data = snake_head_on | snake_body_on;

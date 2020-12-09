@@ -24,9 +24,14 @@ module snake_controller(
   
   reg[5:0] current_state, next_state;
   wire v_sync_edge;
+//  reg got_apple_q;
   
   // For debug purposes
   assign state_out = current_state;
+  
+//  always @(posedge clk_25mhz) begin
+//    got_apple_q <= got_apple;
+//  end
   
   reg v_sync_current, v_sync_last;
   assign v_sync_edge = (v_sync_current == 0) & (v_sync_last == 1);
@@ -81,6 +86,11 @@ module snake_controller(
             apple_update = 1;
             next_state = STATE_WAIT;
           end else if (v_sync_edge) begin
+            if (got_apple) begin
+              snake_increase_size = 1;
+              snake_update = 1;
+              apple_update = 1;
+            end
             next_state = STATE_WAIT;
           end          
         end

@@ -109,7 +109,7 @@ module snake(
     end
   end
   
-  always @(posedge update or posedge reset) begin
+  always @(posedge increase_size or posedge reset) begin
     if (reset) begin
       size <= 7'd4;
     end else if (increase_size) begin
