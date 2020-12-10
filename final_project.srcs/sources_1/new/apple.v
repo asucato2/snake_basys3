@@ -2,6 +2,8 @@ module apple(
     input reset,
     input[9:0] pixel_col,
     input[9:0] pixel_row,
+    input[9:0] rand_x,
+    input[9:0] rand_y,
     input update,
     output reg apple_on
 );
@@ -20,14 +22,8 @@ module apple(
     end
   end
   
-  always @(posedge update or posedge reset) begin
-    if (reset) begin
-      x <= 10'd320;
-      y <= 10'd240;
-    end else begin
-      // Add random functionality
-      x <= x + 10;
-      y <= y + 10;
-    end
+  always @(posedge update) begin
+    x <= rand_x;
+    y <= rand_y;
   end
 endmodule

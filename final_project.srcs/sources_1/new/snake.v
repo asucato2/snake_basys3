@@ -8,7 +8,7 @@ module snake(
     output reg snake_body_on
 );
 
-  localparam BLOCK_SIZE = 10'd9;
+  localparam BLOCK_SIZE = 10'd8;
   
   localparam DIRECTION_UP = 4'b0001;
   localparam DIRECTION_DOWN = 4'b0010;

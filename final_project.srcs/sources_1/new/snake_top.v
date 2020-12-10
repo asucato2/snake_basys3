@@ -4,7 +4,9 @@ module snake_top(
     input BTN_C, BTN_U, BTN_D, BTN_L, BTN_R,
     output[15:0] LED,
     output[3:0] VGA_RED, VGA_GREEN, VGA_BLUE,
-    output VGA_HS, VGA_VS
+    output VGA_HS, VGA_VS,
+    output[3:0] SSEG_AN,
+    output[6:0] SSEG_CA
 );
 
   wire clk_25mhz;
@@ -24,8 +26,10 @@ module snake_top(
   reg collision;
   reg got_apple;
   
-  wire [3:0] score;
+  wire [12:0] score;
   wire score_counter_sclr;
+  
+  wire[9:0] rand_x, rand_y;
   
   wire[5:0] state_out;
   
@@ -82,6 +86,8 @@ module snake_top(
     .reset(reset),
     .pixel_col(pixel_col),
     .pixel_row(pixel_row),
+    .rand_x(rand_x),
+    .rand_y(rand_y),
     .update(apple_update),
     .apple_on(apple_on)
   );
@@ -117,9 +123,25 @@ module snake_top(
   score_counter score_counter(
     .clk(clk_25mhz),
     .sclr(score_counter_sclr),
-    .en(clk_5hz),
+    .en(snake_increase_size),
     .score_out(score)
   );
+  
+  random_point_gen random_point_gen(
+    .clk(clk_25mhz),
+    .reset(reset),
+    .rand_x(rand_x),
+    .rand_y(rand_y)
+  );
+  
+  seven_seg_controller(
+    .clock_100Mhz(CLK100MHZ),
+    .reset(reset),
+    .disp_in(score),
+    .Anode_Activate(SSEG_AN),
+    .LED_out(SSEG_CA)
+  );
+    
   
   always @(posedge clk_25mhz) begin
     collision <= snake_head_on & (snake_body_on | border_on);
@@ -141,6 +163,5 @@ module snake_top(
   assign LED[15] = collision;
   assign LED[14] = got_apple;
   assign LED[13] = clk_5hz;
-  assign LED[10:7] = score;
   
 endmodule
